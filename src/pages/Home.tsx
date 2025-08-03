@@ -430,6 +430,7 @@ const Home: React.FC = () => {
           </div>
         </div>
       </section>
+
       {/* Why Choose Payless Section - Enhanced */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -474,7 +475,6 @@ const Home: React.FC = () => {
           </AnimationWrapper>
         </div>
       </section>
-
 
       {/* Destinations Section - Enhanced Discount Cards */}
       <section className="py-20 bg-gray-50">
@@ -646,6 +646,7 @@ const Home: React.FC = () => {
           </div>
         </div>
       </section>
+
       {/* Enhanced CTA Section */}
       <section className="py-20 bg-gradient-to-r from-sky-500 to-blue-600 text-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
