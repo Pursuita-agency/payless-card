@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   MapPin, 
@@ -21,60 +21,72 @@ import {
   Target,
   Compass,
   Ticket,
-  CreditCard
+  CreditCard,
+  Hotel,
+  Plane,
+  FileText,
+  Building,
+  ChevronDown,
+  ChevronUp,
+  HelpCircle,
+  Plus,
+  Minus
 } from 'lucide-react';
 import AnimationWrapper from '../components/AnimationWrapper';
 import PaylessCard from '../components/PaylessCard';
 
 const Home: React.FC = () => {
+  const [showAllVouchers, setShowAllVouchers] = useState(false);
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
+
   const destinations = [
     {
       name: 'North Coast',
       description: 'Pristine beaches and luxury resorts',
-      discount: '70%',
+      discount: '20%',
       image: 'https://images.pexels.com/photos/1450360/pexels-photo-1450360.jpeg?auto=compress&cs=tinysrgb&w=800',
       originalPrice: '3000',
-      discountedPrice: '900'
+      discountedPrice: '2400'
     },
     {
       name: 'Sharm El Sheikh',
       description: 'World-class diving and coral reefs',
-      discount: '65%',
+      discount: '18%',
       image: 'https://images.pexels.com/photos/261410/pexels-photo-261410.jpeg?auto=compress&cs=tinysrgb&w=800',
       originalPrice: '2500',
-      discountedPrice: '875'
+      discountedPrice: '2050'
     },
     {
       name: 'El Gouna',
       description: 'Modern lagoon town paradise',
-      discount: '60%',
+      discount: '15%',
       image: 'https://images.pexels.com/photos/248159/pexels-photo-248159.jpeg?auto=compress&cs=tinysrgb&w=800',
       originalPrice: '2800',
-      discountedPrice: '1120'
+      discountedPrice: '2380'
     },
     {
       name: 'Dahab',
       description: 'Bohemian vibe and Blue Hole',
-      discount: '55%',
+      discount: '12%',
       image: 'https://images.pexels.com/photos/2382681/pexels-photo-2382681.jpeg?auto=compress&cs=tinysrgb&w=800',
       originalPrice: '2000',
-      discountedPrice: '900'
+      discountedPrice: '1760'
     },
     {
       name: 'Luxor',
       description: 'Ancient temples and royal tombs',
-      discount: '50%',
+      discount: '10%',
       image: 'https://images.pexels.com/photos/262780/pexels-photo-262780.jpeg?auto=compress&cs=tinysrgb&w=800',
       originalPrice: '1800',
-      discountedPrice: '900'
+      discountedPrice: '1620'
     },
     {
       name: 'Aswan',
       description: 'Nubian culture and Nile cruises',
-      discount: '45%',
+      discount: '8%',
       image: 'https://images.pexels.com/photos/1450363/pexels-photo-1450363.jpeg?auto=compress&cs=tinysrgb&w=800',
       originalPrice: '2200',
-      discountedPrice: '1210'
+      discountedPrice: '2024'
     }
   ];
 
@@ -82,7 +94,7 @@ const Home: React.FC = () => {
     {
       icon: <TrendingUp className="h-8 w-8" />,
       title: 'Unbeatable Discounts',
-      description: 'Save up to 70% on your entire trip - hotels, dining, activities, and more across Egypt',
+      description: 'Save up to 20% on your entire trip - hotels, dining, activities, and more across Egypt',
       color: 'from-emerald-400 to-emerald-600',
       bgColor: 'from-emerald-50 to-emerald-100'
     },
@@ -109,24 +121,87 @@ const Home: React.FC = () => {
     }
   ];
 
-  const howItWorksSteps = [
+  const services = [
     {
-      step: '1',
-      title: 'Sign Up',
-      description: 'Fill out our simple booking form with your travel details and get instant approval',
-      icon: <UserCheck className="h-8 w-8" />
+      icon: <Hotel className="h-12 w-12" />,
+      title: 'Hotels',
+      description: 'Up to 20% off hotels inside and outside Egypt. We help find top-quality accommodation at the best price.',
+      color: 'from-blue-500 to-blue-600',
+      bgColor: 'from-blue-50 to-blue-100'
     },
     {
-      step: '2',
-      title: 'Get Your Card',
-      description: 'Receive your digital Payless card within 24 hours via email and mobile app',
-      icon: <Download className="h-8 w-8" />
+      icon: <Plane className="h-12 w-12" />,
+      title: 'Flight Tickets',
+      description: 'Up to 10% discount on global flights.',
+      color: 'from-sky-500 to-sky-600',
+      bgColor: 'from-sky-50 to-sky-100'
     },
     {
-      step: '3',
-      title: 'Start Saving',
-      description: 'Show your card at any partner location and enjoy instant discounts up to 70%',
-      icon: <Percent className="h-8 w-8" />
+      icon: <FileText className="h-12 w-12" />,
+      title: 'Visa',
+      description: 'We assist with visa applications worldwide. Just a passport and a photo needed.',
+      color: 'from-green-500 to-green-600',
+      bgColor: 'from-green-50 to-green-100'
+    },
+    {
+      icon: <Building className="h-12 w-12" />,
+      title: 'Umrah',
+      description: 'Tailored Umrah packages with full service including hotels, flights, visas, and barcode.',
+      color: 'from-purple-500 to-purple-600',
+      bgColor: 'from-purple-50 to-purple-100'
+    }
+  ];
+
+  const vouchers = [
+    {
+      title: 'Free Nile Cruise Night',
+      description: 'Enjoy a free night when you book three or more nights on the Nile Cruise between Luxor and Aswan.',
+      image: 'https://images.pexels.com/photos/262780/pexels-photo-262780.jpeg?auto=compress&cs=tinysrgb&w=400'
+    },
+    {
+      title: 'Nile Dinner Discount',
+      description: 'Enjoy a 30% discount on an open buffet dinner invitation for 2 persons at selected locations along the Nile.',
+      image: 'https://images.pexels.com/photos/1581384/pexels-photo-1581384.jpeg?auto=compress&cs=tinysrgb&w=400'
+    },
+    {
+      title: 'Extended Umrah Trip',
+      description: 'Experience a 14-night Umrah trip at the cost of only 11 nights.',
+      image: 'https://images.pexels.com/photos/8129903/pexels-photo-8129903.jpeg?auto=compress&cs=tinysrgb&w=400'
+    },
+    {
+      title: 'Umrah Discount',
+      description: 'Receive a discount ranging from 2,500 to 5,000 EGP per person on your Umrah trip.',
+      image: 'https://images.pexels.com/photos/8129903/pexels-photo-8129903.jpeg?auto=compress&cs=tinysrgb&w=400'
+    },
+    {
+      title: 'Free Visa Processing',
+      description: 'Visa issuance fees are waived if you book 6+ nights outside Egypt.',
+      image: 'https://images.pexels.com/photos/1591373/pexels-photo-1591373.jpeg?auto=compress&cs=tinysrgb&w=400'
+    },
+    {
+      title: 'Premium Residence Visa',
+      description: 'A premium residence visa for professionals is now available at a discounted rate of $30,000 (was $35,000).',
+      image: 'https://images.pexels.com/photos/1591373/pexels-photo-1591373.jpeg?auto=compress&cs=tinysrgb&w=400'
+    },
+    {
+      title: 'Complimentary International Night',
+      description: 'Enjoy a complimentary night when you book six nights outside Egypt, while keeping your cost under $100.',
+      image: 'https://images.pexels.com/photos/1591373/pexels-photo-1591373.jpeg?auto=compress&cs=tinysrgb&w=400'
+    },
+    {
+      title: 'Free $50 Credit',
+      description: 'Get a cool $50 absolutely free!',
+      image: 'https://images.pexels.com/photos/259027/pexels-photo-259027.jpeg?auto=compress&cs=tinysrgb&w=400'
+    },
+    {
+      title: 'Flight Discount',
+      description: 'Get a fabulous 250 EGP off your flight tickets!',
+      image: 'https://images.pexels.com/photos/912050/pexels-photo-912050.jpeg?auto=compress&cs=tinysrgb&w=400'
+    },
+    {
+      title: 'Free Day Use',
+      description: 'Day use without spending a dime!',
+      image: 'https://images.pexels.com/photos/261102/pexels-photo-261102.jpeg?auto=compress&cs=tinysrgb&w=400'
     }
   ];
 
@@ -153,6 +228,31 @@ const Home: React.FC = () => {
       savings: '3200 EGP'
     }
   ];
+
+  const faqs = [
+    {
+      question: 'How does the Payless card work?',
+      answer: 'Simply present your Payless card at any of our partner locations to receive instant discounts. The card is activated within 24 hours of registration and can be used immediately.'
+    },
+    {
+      question: 'What destinations are covered by Payless?',
+      answer: 'Payless covers all major Egyptian destinations including North Coast, Sharm El Sheikh, Hurghada, Luxor, Aswan, Dahab, El Gouna, and many more locations across Egypt.'
+    },
+    {
+      question: 'How much can I save with Payless?',
+      answer: 'You can save up to 20% on hotels, restaurants, activities, and experiences. Our vouchers can help you save over 20,000 EGP annually with special deals and exclusive offers.'
+    },
+    {
+      question: 'Is there an annual fee for the Payless card?',
+      answer: 'The Payless card has a one-time registration fee. There are no hidden charges or annual fees. Once you have the card, you can use it for unlimited savings.'
+    },
+    {
+      question: 'Can I use the card for international travel?',
+      answer: 'Yes! Payless offers discounts on international flights, visa processing, and hotel bookings outside Egypt. Some vouchers specifically apply to international destinations.'
+    }
+  ];
+
+  const displayedVouchers = showAllVouchers ? vouchers : vouchers.slice(0, 6);
 
   return (
     <div className="min-h-screen">
@@ -182,12 +282,12 @@ const Home: React.FC = () => {
               
               <p className="text-xl md:text-2xl text-blue-100 mb-8 max-w-3xl animate-fade-in-up stagger-2 font-manrope">
                 From the pristine beaches of the North Coast to the ancient wonders of Luxor - 
-                save up to 70% on hotels, dining, and experiences everywhere in Egypt.
+                save up to 20% on hotels, dining, and experiences everywhere in Egypt.
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center animate-fade-in-up stagger-3">
                 <Link
-                  to="/book"
+                  to="/get-your-card"
                   className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-2xl hover:shadow-orange-500/25 flex items-center space-x-2 animate-pulse-slow"
                 >
                   <span>Unlock Your Discount</span>
@@ -229,7 +329,74 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Why Choose Payless Section - Enhanced */}
+      {/* About Us Section */}
+      <section id="about" className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <AnimationWrapper animationType="slide-in-left">
+              <div>
+                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+                  About Us
+                </h2>
+                <h3 className="text-2xl md:text-3xl font-semibold text-sky-600 mb-6 font-manrope">
+                  Discover the World with Payless...
+                </h3>
+                <p className="text-lg text-gray-600 leading-relaxed font-manrope">
+                  Payless card is your ultimate pass to incredible discounts of up to 50% on all your travel adventures! 
+                  Whether you're envisioning luxurious hotels, thrilling cruises, or serene yacht retreats, 
+                  Payless is your reliable companion for maximizing savings on every aspect of your journey!
+                </p>
+              </div>
+            </AnimationWrapper>
+            
+            <AnimationWrapper animationType="slide-in-right">
+              <div className="flex justify-center">
+                <PaylessCard size="large" />
+              </div>
+            </AnimationWrapper>
+          </div>
+        </div>
+      </section>
+
+      {/* Our Services Section */}
+      <section id="services" className="py-20 bg-gradient-to-br from-sky-50 to-blue-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <AnimationWrapper animationType="fade-in">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+                Our Services
+              </h2>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto font-manrope">
+                Comprehensive travel solutions with exclusive discounts for Payless cardholders
+              </p>
+            </div>
+          </AnimationWrapper>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {services.map((service, index) => (
+              <AnimationWrapper 
+                key={index}
+                animationType="scale-in"
+                delay={index * 200}
+              >
+                <div className={`bg-gradient-to-br ${service.bgColor} p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 border border-gray-100 group text-center`}>
+                  <div className={`bg-gradient-to-r ${service.color} text-white p-4 rounded-xl w-fit mx-auto mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                    {service.icon}
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-4">
+                    {service.title}
+                  </h3>
+                  <p className="text-gray-700 leading-relaxed font-manrope">
+                    {service.description}
+                  </p>
+                </div>
+              </AnimationWrapper>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Why Choose Payless Section */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimationWrapper animationType="fade-in">
@@ -265,7 +432,6 @@ const Home: React.FC = () => {
             ))}
           </div>
 
-          {/* Payless Card Display - Benefits Section */}
           <AnimationWrapper animationType="scale-in">
             <div className="flex justify-center">
               <PaylessCard size="large" showAnimation={false} />
@@ -274,58 +440,94 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* How It Works Section */}
-      <section className="py-20 bg-gradient-to-br from-sky-50 to-blue-50">
+      {/* Our Vouchers Section */}
+      <section id="vouchers" className="py-20 bg-gradient-to-br from-sky-50 to-blue-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimationWrapper animationType="fade-in">
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-                How Payless Works
+                Our Vouchers
               </h2>
-              <p className="text-xl text-gray-600 max-w-2xl mx-auto font-manrope">
-                Getting started is simple. Follow these three easy steps to unlock amazing savings
+              <p className="text-2xl text-sky-600 font-semibold mb-4 font-manrope">
+                Unlock exclusive vouchers that can save you over 20,000 EGP each year!
+              </p>
+              <p className="text-lg text-gray-600 max-w-3xl mx-auto font-manrope">
+                Discover amazing deals and exclusive offers available only to Payless cardholders
               </p>
             </div>
           </AnimationWrapper>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {howItWorksSteps.map((step, index) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            {displayedVouchers.map((voucher, index) => (
               <AnimationWrapper 
                 key={index}
                 animationType="scale-in"
-                delay={index * 300}
+                delay={index * 150}
               >
-                <div className="text-center relative">
-                  {/* Step connector line */}
-                  {index < howItWorksSteps.length - 1 && (
-                    <div className="hidden md:block absolute top-16 left-1/2 w-full h-0.5 bg-gradient-to-r from-sky-300 to-blue-300 transform translate-x-1/2"></div>
-                  )}
+                <div className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 border border-gray-100 group">
+                  <div className="relative h-48 overflow-hidden">
+                    <img 
+                      src={voucher.image} 
+                      alt={voucher.title}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                    
+                    <div className="absolute top-4 right-4 bg-gradient-to-r from-orange-500 to-red-500 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
+                      <Gift className="h-3 w-3 inline mr-1" />
+                      VOUCHER
+                    </div>
+                    
+                    <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-sm px-3 py-1 rounded-lg flex items-center space-x-1 shadow-lg">
+                      <CreditCard className="w-3 h-3 text-sky-600" />
+                      <span className="text-xs font-bold text-gray-800">PAYLESS</span>
+                    </div>
+                  </div>
                   
-                  <div className="relative z-10 bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 group">
-                    <div className="bg-gradient-to-r from-sky-500 to-blue-600 text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold group-hover:animate-bounce-slow">
-                      {step.step}
-                    </div>
-                    
-                    <div className="bg-sky-100 text-sky-600 p-4 rounded-xl w-fit mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
-                      {step.icon}
-                    </div>
-                    
-                    <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                      {step.title}
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold text-gray-900 mb-3">
+                      {voucher.title}
                     </h3>
-                    
-                    <p className="text-gray-600 text-lg leading-relaxed font-manrope">
-                      {step.description}
+                    <p className="text-gray-600 leading-relaxed font-manrope">
+                      {voucher.description}
                     </p>
                   </div>
                 </div>
               </AnimationWrapper>
             ))}
           </div>
+
+          {!showAllVouchers && (
+            <AnimationWrapper animationType="fade-in">
+              <div className="text-center">
+                <button
+                  onClick={() => setShowAllVouchers(true)}
+                  className="bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center space-x-2 mx-auto"
+                >
+                  <span>Show More Vouchers</span>
+                  <ChevronDown className="h-5 w-5" />
+                </button>
+              </div>
+            </AnimationWrapper>
+          )}
+
+          {showAllVouchers && (
+            <AnimationWrapper animationType="fade-in">
+              <div className="text-center">
+                <button
+                  onClick={() => setShowAllVouchers(false)}
+                  className="bg-gradient-to-r from-gray-500 to-gray-600 hover:from-gray-600 hover:to-gray-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center space-x-2 mx-auto"
+                >
+                  <span>Show Less</span>
+                  <ChevronUp className="h-5 w-5" />
+                </button>
+              </div>
+            </AnimationWrapper>
+          )}
         </div>
       </section>
 
-      {/* Destinations Section - Enhanced Discount Cards */}
+      {/* Destinations Section */}
       <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimationWrapper animationType="fade-in">
@@ -355,13 +557,11 @@ const Home: React.FC = () => {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                     
-                    {/* Enhanced Discount Badge */}
                     <div className="absolute top-4 right-4 bg-gradient-to-r from-orange-500 to-red-500 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg animate-pulse-slow">
                       <Ticket className="h-3 w-3 inline mr-1" />
                       {destination.discount} OFF
                     </div>
                     
-                    {/* Enhanced Payless Mini Badge */}
                     <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-sm px-3 py-1 rounded-lg flex items-center space-x-1 shadow-lg">
                       <CreditCard className="w-3 h-3 text-sky-600" />
                       <span className="text-xs font-bold text-gray-800">PAYLESS</span>
@@ -461,6 +661,63 @@ const Home: React.FC = () => {
         </div>
       </section>
 
+      {/* FAQ Section */}
+      <section className="py-20 bg-gradient-to-br from-sky-50 to-blue-50">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <AnimationWrapper animationType="fade-in">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+                Frequently Asked Questions
+              </h2>
+              <p className="text-xl text-gray-600 font-manrope">
+                Everything you need to know about Payless
+              </p>
+            </div>
+          </AnimationWrapper>
+
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <AnimationWrapper 
+                key={index}
+                animationType="fade-in"
+                delay={index * 100}
+              >
+                <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+                  <button
+                    onClick={() => setOpenFaq(openFaq === index ? null : index)}
+                    className="w-full px-8 py-6 text-left flex items-center justify-between hover:bg-gray-50 transition-colors duration-200"
+                  >
+                    <div className="flex items-center space-x-4">
+                      <div className="bg-sky-100 p-2 rounded-lg">
+                        <HelpCircle className="h-5 w-5 text-sky-600" />
+                      </div>
+                      <h3 className="text-lg font-semibold text-gray-900">
+                        {faq.question}
+                      </h3>
+                    </div>
+                    {openFaq === index ? (
+                      <Minus className="h-5 w-5 text-gray-500" />
+                    ) : (
+                      <Plus className="h-5 w-5 text-gray-500" />
+                    )}
+                  </button>
+                  
+                  {openFaq === index && (
+                    <div className="px-8 pb-6">
+                      <div className="pl-12">
+                        <p className="text-gray-600 leading-relaxed font-manrope">
+                          {faq.answer}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </AnimationWrapper>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Enhanced CTA Section */}
       <section className="py-20 bg-gradient-to-r from-sky-500 to-blue-600 text-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -477,7 +734,7 @@ const Home: React.FC = () => {
                 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center">
                   <Link
-                    to="/book"
+                    to="/get-your-card"
                     className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-xl flex items-center space-x-2 animate-glow"
                   >
                     <Gift className="h-5 w-5" />
@@ -498,7 +755,6 @@ const Home: React.FC = () => {
               </div>
             </AnimationWrapper>
 
-            {/* Payless Card Display - CTA Section */}
             <AnimationWrapper animationType="slide-in-right">
               <div className="flex justify-center lg:justify-end">
                 <PaylessCard size="large" />
@@ -521,7 +777,7 @@ const Home: React.FC = () => {
                 Every day you wait is money you could be saving. Get your Payless card today!
               </p>
               <Link
-                to="/book"
+                to="/get-your-card"
                 className="inline-flex items-center bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg space-x-2"
               >
                 <span>Start Your Journey with Payless</span>

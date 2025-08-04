@@ -1,78 +1,70 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { 
-  CreditCard, 
-  User, 
-  Mail, 
-  Phone, 
-  MapPin, 
   Calendar, 
-  Users, 
-  Upload, 
-  MessageSquare,
+  User, 
+  Phone, 
+  Mail, 
+  CreditCard, 
   CheckCircle,
   ArrowLeft,
   Star,
   Shield,
-  Clock
+  Clock,
+  MapPin
 } from 'lucide-react';
 
 interface FormData {
-  fullName: string;
-  email: string;
+  name: string;
   phone: string;
-  destination: string;
-  travelDate: string;
-  travelers: string;
-  document: File | null;
-  notes: string;
+  email: string;
+  idSerial: string;
+  reservationType: string;
+  checkInDate: string;
+  checkOutDate: string;
 }
 
 interface FormErrors {
-  fullName?: string;
-  email?: string;
+  name?: string;
   phone?: string;
-  destination?: string;
-  travelDate?: string;
-  travelers?: string;
+  email?: string;
+  idSerial?: string;
+  reservationType?: string;
+  checkInDate?: string;
+  checkOutDate?: string;
 }
 
-const BookNow: React.FC = () => {
+const Reservation: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
-    fullName: '',
-    email: '',
+    name: '',
     phone: '',
-    destination: '',
-    travelDate: '',
-    travelers: '1',
-    document: null,
-    notes: ''
+    email: '',
+    idSerial: '',
+    reservationType: '',
+    checkInDate: '',
+    checkOutDate: ''
   });
 
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const destinations = [
-    'North Coast',
-    'Sharm El Sheikh',
-    'El Gouna',
-    'Dahab',
-    'Luxor',
-    'Aswan',
-    'Hurghada',
-    'Marsa Alam',
-    'Siwa Oasis',
-    'Alexandria',
-    'Cairo',
-    'Other'
+  const reservationTypes = [
+    'Hotel',
+    'Visa',
+    'Ticket',
+    'Voucher'
   ];
 
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
 
-    if (!formData.fullName.trim()) {
-      newErrors.fullName = 'Full name is required';
+    if (!formData.name.trim()) {
+      newErrors.name = 'Name is required';
+    }
+
+    if (!formData.phone.trim()) {
+      newErrors.phone = 'Phone number is required';
     }
 
     if (!formData.email.trim()) {
@@ -81,48 +73,43 @@ const BookNow: React.FC = () => {
       newErrors.email = 'Please enter a valid email address';
     }
 
-    if (!formData.phone.trim()) {
-      newErrors.phone = 'Phone number is required';
+    if (!formData.idSerial.trim()) {
+      newErrors.idSerial = 'Payless Card Number is required';
     }
 
-    if (!formData.destination) {
-      newErrors.destination = 'Please select a destination';
+    if (!formData.reservationType) {
+      newErrors.reservationType = 'Please select a reservation type';
     }
 
-    if (!formData.travelDate) {
-      newErrors.travelDate = 'Travel date is required';
+    if (!formData.checkInDate) {
+      newErrors.checkInDate = 'Check-in date is required';
     }
 
-    if (!formData.travelers || parseInt(formData.travelers) < 1) {
-      newErrors.travelers = 'Please specify number of travelers';
+    if (!formData.checkOutDate) {
+      newErrors.checkOutDate = 'Check-out date is required';
+    }
+
+    if (formData.checkInDate && formData.checkOutDate && formData.checkInDate >= formData.checkOutDate) {
+      newErrors.checkOutDate = 'Check-out date must be after check-in date';
     }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
       [name]: value
     }));
     
-    // Clear error when user starts typing
     if (errors[name as keyof FormErrors]) {
       setErrors(prev => ({
         ...prev,
         [name]: undefined
       }));
     }
-  };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0] || null;
-    setFormData(prev => ({
-      ...prev,
-      document: file
-    }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -134,11 +121,34 @@ const BookNow: React.FC = () => {
 
     setIsSubmitting(true);
     
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    setIsSubmitting(false);
-    setIsSubmitted(true);
+    try {
+      // Create email content
+      const emailContent = `
+        New Payless Reservation:
+        
+        Name: ${formData.name}
+        Phone: ${formData.phone}
+        Email: ${formData.email}
+        Payless Card Number: ${formData.idSerial}
+        Reservation Type: ${formData.reservationType}
+        Check-in Date: ${formData.checkInDate}
+        Check-out Date: ${formData.checkOutDate}
+        
+        Submitted at: ${new Date().toLocaleString()}
+      `;
+
+      // In a real application, you would send this to your backend
+      console.log('Sending email to body.hamed@outlook.com:', emailContent);
+      
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      setIsSubmitted(true);
+    } catch (error) {
+      console.error('Error submitting form:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (isSubmitted) {
@@ -151,11 +161,11 @@ const BookNow: React.FC = () => {
             </div>
             
             <h1 className="text-3xl font-bold text-gray-900 mb-4">
-              Booking Request Submitted!
+              Reservation Submitted Successfully!
             </h1>
             
             <p className="text-lg text-gray-600 mb-8">
-              Thank you for choosing Payless! We've received your booking request and will contact you within 24 hours to confirm your travel discount card details.
+              Thank you for using Payless! We've received your reservation request and will contact you within 24 hours to confirm the details.
             </p>
             
             <div className="bg-sky-50 border border-sky-200 rounded-lg p-6 mb-8">
@@ -163,15 +173,15 @@ const BookNow: React.FC = () => {
               <div className="space-y-2 text-sm text-gray-600 text-left">
                 <div className="flex items-center space-x-2">
                   <div className="w-2 h-2 bg-sky-500 rounded-full"></div>
-                  <span>We'll verify your information and travel details</span>
+                  <span>We'll verify your Payless card details</span>
                 </div>
                 <div className="flex items-center space-x-2">
                   <div className="w-2 h-2 bg-sky-500 rounded-full"></div>
-                  <span>Your Payless card will be activated within 24 hours</span>
+                  <span>Process your reservation with our partners</span>
                 </div>
                 <div className="flex items-center space-x-2">
                   <div className="w-2 h-2 bg-sky-500 rounded-full"></div>
-                  <span>Start enjoying discounts immediately at partner locations</span>
+                  <span>Send you confirmation with discount details</span>
                 </div>
               </div>
             </div>
@@ -188,19 +198,18 @@ const BookNow: React.FC = () => {
                 onClick={() => {
                   setIsSubmitted(false);
                   setFormData({
-                    fullName: '',
-                    email: '',
+                    name: '',
                     phone: '',
-                    destination: '',
-                    travelDate: '',
-                    travelers: '1',
-                    document: null,
-                    notes: ''
+                    email: '',
+                    idSerial: '',
+                    reservationType: '',
+                    checkInDate: '',
+                    checkOutDate: ''
                   });
                 }}
                 className="border border-sky-500 text-sky-600 hover:bg-sky-50 px-6 py-3 rounded-lg font-medium transition-colors duration-200"
               >
-                Book Another Trip
+                Make Another Reservation
               </button>
             </div>
           </div>
@@ -224,15 +233,18 @@ const BookNow: React.FC = () => {
           
           <div className="flex justify-center mb-6">
             <div className="bg-sky-500 p-4 rounded-full">
-              <CreditCard className="h-8 w-8 text-white" />
+              <Calendar className="h-8 w-8 text-white" />
             </div>
           </div>
           
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Get Your Payless Card
+            Make a Reservation
           </h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Join thousands of smart travelers and start saving up to 70% on your next Egyptian adventure
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-4">
+            For existing Payless cardholders
+          </p>
+          <p className="text-lg text-orange-600 font-semibold max-w-3xl mx-auto">
+            Specifically your registered phone number & your membership ID - Make sure to put your data accurately
           </p>
         </div>
 
@@ -240,7 +252,7 @@ const BookNow: React.FC = () => {
           {/* Benefits Sidebar */}
           <div className="lg:col-span-1">
             <div className="bg-white rounded-2xl shadow-lg p-6 sticky top-8">
-              <h3 className="text-lg font-semibold text-gray-900 mb-6">Why Choose Payless?</h3>
+              <h3 className="text-lg font-semibold text-gray-900 mb-6">Reservation Benefits</h3>
               
               <div className="space-y-4">
                 <div className="flex items-start space-x-3">
@@ -248,8 +260,8 @@ const BookNow: React.FC = () => {
                     <Shield className="h-4 w-4 text-green-600" />
                   </div>
                   <div>
-                    <p className="font-medium text-gray-900">Guaranteed Savings</p>
-                    <p className="text-sm text-gray-600">Up to 70% off at 500+ locations</p>
+                    <p className="font-medium text-gray-900">Guaranteed Discounts</p>
+                    <p className="text-sm text-gray-600">Exclusive member pricing</p>
                   </div>
                 </div>
                 
@@ -258,8 +270,8 @@ const BookNow: React.FC = () => {
                     <Clock className="h-4 w-4 text-blue-600" />
                   </div>
                   <div>
-                    <p className="font-medium text-gray-900">Instant Activation</p>
-                    <p className="text-sm text-gray-600">Start saving within 24 hours</p>
+                    <p className="font-medium text-gray-900">Quick Processing</p>
+                    <p className="text-sm text-gray-600">24-hour confirmation</p>
                   </div>
                 </div>
                 
@@ -268,21 +280,21 @@ const BookNow: React.FC = () => {
                     <Star className="h-4 w-4 text-orange-600" />
                   </div>
                   <div>
-                    <p className="font-medium text-gray-900">Premium Support</p>
-                    <p className="text-sm text-gray-600">24/7 customer assistance</p>
+                    <p className="font-medium text-gray-900">VIP Treatment</p>
+                    <p className="text-sm text-gray-600">Priority booking</p>
                   </div>
                 </div>
               </div>
               
               <div className="mt-6 pt-6 border-t border-gray-200">
                 <p className="text-sm text-gray-500 text-center">
-                  Trusted by 50,000+ travelers across Egypt
+                  Exclusive access for Payless members
                 </p>
               </div>
             </div>
           </div>
 
-          {/* Booking Form */}
+          {/* Reservation Form */}
           <div className="lg:col-span-2">
             <div className="bg-white rounded-2xl shadow-xl p-8">
               <form onSubmit={handleSubmit} className="space-y-6">
@@ -295,28 +307,50 @@ const BookNow: React.FC = () => {
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-2">
-                        Full Name *
+                      <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+                        Name *
                       </label>
                       <input
                         type="text"
-                        id="fullName"
-                        name="fullName"
-                        value={formData.fullName}
+                        id="name"
+                        name="name"
+                        value={formData.name}
                         onChange={handleInputChange}
                         className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-colors duration-200 ${
-                          errors.fullName ? 'border-red-300' : 'border-gray-300'
+                          errors.name ? 'border-red-300' : 'border-gray-300'
                         }`}
-                        placeholder="Enter your full name"
+                        placeholder="Enter your name"
                       />
-                      {errors.fullName && (
-                        <p className="mt-1 text-sm text-red-600">{errors.fullName}</p>
+                      {errors.name && (
+                        <p className="mt-1 text-sm text-red-600">{errors.name}</p>
                       )}
                     </div>
                     
                     <div>
+                      <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
+                        Phone *
+                      </label>
+                      <input
+                        type="tel"
+                        id="phone"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleInputChange}
+                        className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-colors duration-200 ${
+                          errors.phone ? 'border-red-300' : 'border-gray-300'
+                        }`}
+                        placeholder="+20 123 456 789"
+                      />
+                      {errors.phone && (
+                        <p className="mt-1 text-sm text-red-600">{errors.phone}</p>
+                      )}
+                    </div>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                    <div>
                       <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                        Email Address *
+                        Email *
                       </label>
                       <input
                         type="email"
@@ -333,155 +367,100 @@ const BookNow: React.FC = () => {
                         <p className="mt-1 text-sm text-red-600">{errors.email}</p>
                       )}
                     </div>
-                  </div>
-                  
-                  <div className="mt-6">
-                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
-                      Phone Number *
-                    </label>
-                    <input
-                      type="tel"
-                      id="phone"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleInputChange}
-                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-colors duration-200 ${
-                        errors.phone ? 'border-red-300' : 'border-gray-300'
-                      }`}
-                      placeholder="+20 123 456 789"
-                    />
-                    {errors.phone && (
-                      <p className="mt-1 text-sm text-red-600">{errors.phone}</p>
-                    )}
+                    
+                    <div>
+                      <label htmlFor="idSerial" className="block text-sm font-medium text-gray-700 mb-2">
+                        ID Serial (Payless Card Number) *
+                      </label>
+                      <input
+                        type="text"
+                        id="idSerial"
+                        name="idSerial"
+                        value={formData.idSerial}
+                        onChange={handleInputChange}
+                        className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-colors duration-200 ${
+                          errors.idSerial ? 'border-red-300' : 'border-gray-300'
+                        }`}
+                        placeholder="Enter your card number"
+                      />
+                      {errors.idSerial && (
+                        <p className="mt-1 text-sm text-red-600">{errors.idSerial}</p>
+                      )}
+                    </div>
                   </div>
                 </div>
 
-                {/* Travel Details */}
+                {/* Reservation Details */}
                 <div className="pt-6 border-t border-gray-200">
                   <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center space-x-2">
                     <MapPin className="h-5 w-5 text-sky-500" />
-                    <span>Travel Details</span>
+                    <span>Reservation Details</span>
                   </h3>
                   
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div>
-                      <label htmlFor="destination" className="block text-sm font-medium text-gray-700 mb-2">
-                        Destination *
+                      <label htmlFor="reservationType" className="block text-sm font-medium text-gray-700 mb-2">
+                        Reservation Type *
                       </label>
                       <select
-                        id="destination"
-                        name="destination"
-                        value={formData.destination}
+                        id="reservationType"
+                        name="reservationType"
+                        value={formData.reservationType}
                         onChange={handleInputChange}
                         className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-colors duration-200 ${
-                          errors.destination ? 'border-red-300' : 'border-gray-300'
+                          errors.reservationType ? 'border-red-300' : 'border-gray-300'
                         }`}
                       >
-                        <option value="">Select your destination</option>
-                        {destinations.map((dest) => (
-                          <option key={dest} value={dest}>{dest}</option>
+                        <option value="">Select type</option>
+                        {reservationTypes.map((type) => (
+                          <option key={type} value={type}>{type}</option>
                         ))}
                       </select>
-                      {errors.destination && (
-                        <p className="mt-1 text-sm text-red-600">{errors.destination}</p>
+                      {errors.reservationType && (
+                        <p className="mt-1 text-sm text-red-600">{errors.reservationType}</p>
                       )}
                     </div>
                     
                     <div>
-                      <label htmlFor="travelDate" className="block text-sm font-medium text-gray-700 mb-2">
-                        Travel Date *
+                      <label htmlFor="checkInDate" className="block text-sm font-medium text-gray-700 mb-2">
+                        Check-in Date *
                       </label>
                       <input
                         type="date"
-                        id="travelDate"
-                        name="travelDate"
-                        value={formData.travelDate}
+                        id="checkInDate"
+                        name="checkInDate"
+                        value={formData.checkInDate}
                         onChange={handleInputChange}
                         min={new Date().toISOString().split('T')[0]}
                         className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-colors duration-200 ${
-                          errors.travelDate ? 'border-red-300' : 'border-gray-300'
+                          errors.checkInDate ? 'border-red-300' : 'border-gray-300'
                         }`}
                       />
-                      {errors.travelDate && (
-                        <p className="mt-1 text-sm text-red-600">{errors.travelDate}</p>
+                      {errors.checkInDate && (
+                        <p className="mt-1 text-sm text-red-600">{errors.checkInDate}</p>
+                      )}
+                    </div>
+                    
+                    <div>
+                      <label htmlFor="checkOutDate" className="block text-sm font-medium text-gray-700 mb-2">
+                        Check-out Date *
+                      </label>
+                      <input
+                        type="date"
+                        id="checkOutDate"
+                        name="checkOutDate"
+                        value={formData.checkOutDate}
+                        onChange={handleInputChange}
+                        min={formData.checkInDate || new Date().toISOString().split('T')[0]}
+                        className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-colors duration-200 ${
+                          errors.checkOutDate ? 'border-red-300' : 'border-gray-300'
+                        }`}
+                      />
+                      {errors.checkOutDate && (
+                        <p className="mt-1 text-sm text-red-600">{errors.checkOutDate}</p>
                       )}
                     </div>
                   </div>
-                  
-                  <div className="mt-6">
-                    <label htmlFor="travelers" className="block text-sm font-medium text-gray-700 mb-2">
-                      Number of Travelers *
-                    </label>
-                    <select
-                      id="travelers"
-                      name="travelers"
-                      value={formData.travelers}
-                      onChange={handleInputChange}
-                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-colors duration-200 ${
-                        errors.travelers ? 'border-red-300' : 'border-gray-300'
-                      }`}
-                    >
-                      {[1,2,3,4,5,6,7,8,9,10].map((num) => (
-                        <option key={num} value={num}>
-                          {num} {num === 1 ? 'Traveler' : 'Travelers'}
-                        </option>
-                      ))}
-                    </select>
-                    {errors.travelers && (
-                      <p className="mt-1 text-sm text-red-600">{errors.travelers}</p>
-                    )}
-                  </div>
-                </div>
-
-                {/* Document Upload */}
-                <div className="pt-6 border-t border-gray-200">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center space-x-2">
-                    <Upload className="h-5 w-5 text-sky-500" />
-                    <span>Verification</span>
-                  </h3>
-                  
-                  <div>
-                    <label htmlFor="document" className="block text-sm font-medium text-gray-700 mb-2">
-                      Upload ID or Payment Proof (Optional)
-                    </label>
-                    <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-sky-400 transition-colors duration-200">
-                      <input
-                        type="file"
-                        id="document"
-                        name="document"
-                        onChange={handleFileChange}
-                        accept="image/*,.pdf"
-                        className="hidden"
-                      />
-                      <label
-                        htmlFor="document"
-                        className="cursor-pointer flex flex-col items-center space-y-2"
-                      >
-                        <Upload className="h-8 w-8 text-gray-400" />
-                        <span className="text-sm text-gray-600">
-                          {formData.document ? formData.document.name : 'Click to upload or drag and drop'}
-                        </span>
-                        <span className="text-xs text-gray-400">PNG, JPG, PDF up to 10MB</span>
-                      </label>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Additional Notes */}
-                <div className="pt-6 border-t border-gray-200">
-                  <label htmlFor="notes" className="block text-sm font-medium text-gray-700 mb-2 flex items-center space-x-2">
-                    <MessageSquare className="h-4 w-4 text-sky-500" />
-                    <span>Additional Notes (Optional)</span>
-                  </label>
-                  <textarea
-                    id="notes"
-                    name="notes"
-                    rows={4}
-                    value={formData.notes}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-colors duration-200"
-                    placeholder="Any special requests or questions about your trip?"
-                  />
                 </div>
 
                 {/* Submit Button */}
@@ -498,8 +477,8 @@ const BookNow: React.FC = () => {
                       </div>
                     ) : (
                       <div className="flex items-center justify-center space-x-2">
-                        <CreditCard className="h-5 w-5" />
-                        <span>Get My Payless Card</span>
+                        <Calendar className="h-5 w-5" />
+                        <span>Submit Reservation</span>
                       </div>
                     )}
                   </button>
@@ -517,4 +496,4 @@ const BookNow: React.FC = () => {
   );
 };
 
-export default BookNow;
+export default Reservation;
