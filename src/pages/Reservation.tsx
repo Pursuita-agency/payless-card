@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import emailjs from '@emailjs/browser';
 import { Link } from 'react-router-dom';
 import { 
   Calendar, 
@@ -119,44 +120,40 @@ const Reservation: React.FC = () => {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!validateForm()) {
-      return;
-    }
+  e.preventDefault();
 
-    setIsSubmitting(true);
-    
-    try {
-      // Create email content
-      const emailContent = `
-        New Payless Reservation:
-        
-        Name: ${formData.name}
-        Phone: ${formData.phone}
-        Email: ${formData.email}
-        Payless Card Number: ${formData.idSerial}
-        Reservation Type: ${formData.reservationType}
-        Check-in Date: ${formData.checkInDate}
-        Check-out Date: ${formData.checkOutDate}
-        
-        Submitted at: ${new Date().toLocaleString()}
-      `;
+  if (!validateForm()) {
+    return;
+  }
 
-      // In a real application, you would send this to your backend
-      console.log('Sending email to body.hamed@outlook.com:', emailContent);
-      
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      setIsSubmitted(true);
-    } catch (error) {
-      console.error('Error submitting form:', error);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+  setIsSubmitting(true);
 
+  try {
+    const templateParams = {
+        Name: formData.name,
+        Phone: formData.phone,
+        Email: formData.email,
+        Payless Card Number: formData.idSerial,
+        Reservation Type: formData.reservationType,
+        Check-in Date: formData.checkInDate,
+        Check-out Date: formData.checkOutDate,
+    };
+
+    await emailjs.send(
+      'service_yir3c7j',     // ✅ Service ID
+      'template_ya7smge',    // ✅ Template ID
+      templateParams
+    );
+
+    setIsSubmitted(true);
+  } catch (error) {
+    console.error('Error sending email:', error);
+    alert('Something went wrong. Please try again.');
+  } finally {
+    setIsSubmitting(false);
+  }
+};
+  
   if (isSubmitted) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-sky-50 to-blue-50 py-12">
