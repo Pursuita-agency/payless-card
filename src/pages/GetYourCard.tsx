@@ -110,9 +110,9 @@ const GetYourCard: React.FC = () => {
 
   try {
     const templateParams = {
-      user_name: formData.name,
-      user_phone: formData.phone,
-      user_governorate: formData.governorate,
+      name: formData.name,
+      phone: formData.phone,
+      governorate: formData.governorate,
     };
 
     await emailjs.send(
