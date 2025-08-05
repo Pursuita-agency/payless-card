@@ -101,40 +101,35 @@ const GetYourCard: React.FC = () => {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!validateForm()) {
-      return;
-    }
+  e.preventDefault();
 
-    setIsSubmitting(true);
-    
-    try {
-      // Create email content
-      const emailContent = `
-        New Payless Card Application:
-        
-        Name: ${formData.name}
-        Phone: ${formData.phone}
-        Governorate: ${formData.governorate}
-        
-        Submitted at: ${new Date().toLocaleString()}
-      `;
+  if (!validateForm()) {
+    return;
+  }
 
-      // In a real application, you would send this to your backend
-      // For now, we'll simulate the email sending
-      console.log('Sending email to body.hamed@outlook.com:', emailContent);
-      
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      setIsSubmitted(true);
-    } catch (error) {
-      console.error('Error submitting form:', error);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+  setIsSubmitting(true);
+
+  try {
+    const templateParams = {
+      user_name: formData.name,
+      user_phone: formData.phone,
+      user_governorate: formData.governorate,
+    };
+
+    await emailjs.send(
+      'service_yir3c7j',     // ✅ Service ID
+      'template_4inqu47',    // ✅ Template ID
+      templateParams
+    );
+
+    setIsSubmitted(true);
+  } catch (error) {
+    console.error('Error sending email:', error);
+    alert('Something went wrong. Please try again.');
+  } finally {
+    setIsSubmitting(false);
+  }
+};
 
   if (isSubmitted) {
     return (
