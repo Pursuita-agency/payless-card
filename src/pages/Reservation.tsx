@@ -135,6 +135,7 @@ const Reservation: React.FC = () => {
         Email: formData.email,
         Payless Card Number: formData.idSerial,
         Reservation Type: formData.reservationType,
+        Check-in Date: formData.checkInDate,
         Check-out Date: formData.checkOutDate,
     };
 
