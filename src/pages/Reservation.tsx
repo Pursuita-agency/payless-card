@@ -130,13 +130,13 @@ const Reservation: React.FC = () => {
 
   try {
     const templateParams = {
-        Name: formData.name,
-        Phone: formData.phone,
-        Email: formData.email,
-        Payless Card Number: formData.idSerial,
-        Reservation Type: formData.reservationType,
-        Check-in Date: formData.checkInDate,
-        Check-out Date: formData.checkOutDate,
+        name: formData.name,
+        phone: formData.phone,
+        email: formData.email,
+        pcn: formData.idSerial,
+        rtype: formData.reservationType,
+        checkin: formData.checkInDate,
+        Checkout: formData.checkOutDate,
     };
 
     await emailjs.send(
