@@ -133,10 +133,10 @@ const Reservation: React.FC = () => {
         name: formData.name,
         phone: formData.phone,
         email: formData.email,
-        pcn: formData.idSerial,
-        rtype: formData.reservationType,
-        checkin: formData.checkInDate,
-        Checkout: formData.checkOutDate,
+        idSerial: formData.idSerial,
+        reservationType: formData.reservationType,
+        checkInDate: formData.checkInDate,
+        checkOutDate: formData.checkOutDate,
     };
 
     await emailjs.send(
