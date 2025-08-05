@@ -1,5 +1,5 @@
 import React from 'react';
-import { Mail, Phone, MapPin, Facebook, Instagram, Twitter } from 'lucide-react';
+import { Mail, Phone, MapPin, Facebook, Instagram } from 'lucide-react';
 
 const Footer: React.FC = () => {
   return (
@@ -22,43 +22,23 @@ const Footer: React.FC = () => {
               Save money while creating unforgettable memories across the land of pharaohs.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">
+              <a 
+                href="https://www.facebook.com/share/1Dvq3ejXGK/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-white transition-colors duration-200"
+              >
                 <Facebook className="h-5 w-5" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">
+              <a 
+                href="https://www.instagram.com/payless.card?igsh=cGFubXZxb2V6b3hj" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-white transition-colors duration-200"
+              >
                 <Instagram className="h-5 w-5" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">
-                <Twitter className="h-5 w-5" />
-              </a>
             </div>
-          </div>
-
-          {/* Quick Links */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
-            <ul className="space-y-2">
-              <li>
-                <a href="/" className="text-gray-400 hover:text-white transition-colors duration-200">
-                  Home
-                </a>
-              </li>
-              <li>
-                <a href="/book" className="text-gray-400 hover:text-white transition-colors duration-200">
-                  Book Now
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">
-                  Destinations
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">
-                  About Us
-                </a>
-              </li>
-            </ul>
           </div>
 
           {/* Contact Info */}
@@ -67,11 +47,21 @@ const Footer: React.FC = () => {
             <div className="space-y-3">
               <div className="flex items-center space-x-3">
                 <Mail className="h-4 w-4 text-sky-400" />
-                <span className="text-gray-400 text-sm">info@paylesseg.com</span>
+                <a 
+                  href="mailto:body.hamed@outlook.com" 
+                  className="text-gray-400 text-sm hover:text-white transition-colors duration-200"
+                >
+                  body.hamed@outlook.com
+                </a>
               </div>
               <div className="flex items-center space-x-3">
                 <Phone className="h-4 w-4 text-sky-400" />
-                <span className="text-gray-400 text-sm">010 44503305</span>
+                <a 
+                  href="tel:+201044503305" 
+                  className="text-gray-400 text-sm hover:text-white transition-colors duration-200"
+                >
+                  010 44503305
+                </a>
               </div>
               <div className="flex items-center space-x-3">
                 <MapPin className="h-4 w-4 text-sky-400" />

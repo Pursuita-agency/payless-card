@@ -8,10 +8,9 @@ const Header: React.FC = () => {
 
   const navigation = [
     { name: 'Home', href: '/' },
-    { name: 'About Us', href: '/#about' },
-    { name: 'Our Services', href: '/#services' },
-    { name: 'Our Vouchers', href: '/#vouchers' },
-    { name: 'Get Your Card', href: '/get-your-card' },
+    { name: 'About', href: '/#about' },
+    { name: 'Services', href: '/#services' },
+    { name: 'Vouchers', href: '/#vouchers' },
     { name: 'Reservation', href: '/reservation' },
   ];
 

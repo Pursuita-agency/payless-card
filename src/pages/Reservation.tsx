@@ -75,6 +75,12 @@ const Reservation: React.FC = () => {
 
     if (!formData.idSerial.trim()) {
       newErrors.idSerial = 'Payless Card Number is required';
+    } else if (formData.idSerial.length !== 16) {
+      newErrors.idSerial = 'Payless Card Number must be exactly 16 digits';
+    } else if (!/^\d{16}$/.test(formData.idSerial)) {
+      newErrors.idSerial = 'Payless Card Number must contain only digits';
+    } else if (!formData.idSerial.startsWith('40235050')) {
+      newErrors.idSerial = 'Invalid Payless Card Number. Must start with 40235050';
     }
 
     if (!formData.reservationType) {
@@ -378,10 +384,12 @@ const Reservation: React.FC = () => {
                         name="idSerial"
                         value={formData.idSerial}
                         onChange={handleInputChange}
+                        maxLength={16}
+                        pattern="[0-9]*"
                         className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-colors duration-200 ${
                           errors.idSerial ? 'border-red-300' : 'border-gray-300'
                         }`}
-                        placeholder="Enter your card number"
+                        placeholder="40235050xxxxxxxx"
                       />
                       {errors.idSerial && (
                         <p className="mt-1 text-sm text-red-600">{errors.idSerial}</p>

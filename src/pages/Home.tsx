@@ -127,28 +127,32 @@ const Home: React.FC = () => {
       title: 'Hotels',
       description: 'Up to 20% off hotels inside and outside Egypt. We help find top-quality accommodation at the best price.',
       color: 'from-blue-500 to-blue-600',
-      bgColor: 'from-blue-50 to-blue-100'
+      bgColor: 'from-blue-50 to-blue-100',
+      image: 'https://images.pexels.com/photos/164595/pexels-photo-164595.jpeg?auto=compress&cs=tinysrgb&w=800'
     },
     {
       icon: <Plane className="h-12 w-12" />,
       title: 'Flight Tickets',
       description: 'Up to 10% discount on global flights.',
       color: 'from-sky-500 to-sky-600',
-      bgColor: 'from-sky-50 to-sky-100'
+      bgColor: 'from-sky-50 to-sky-100',
+      image: 'https://images.pexels.com/photos/912050/pexels-photo-912050.jpeg?auto=compress&cs=tinysrgb&w=800'
     },
     {
       icon: <FileText className="h-12 w-12" />,
       title: 'Visa',
       description: 'We assist with visa applications worldwide. Just a passport and a photo needed.',
       color: 'from-green-500 to-green-600',
-      bgColor: 'from-green-50 to-green-100'
+      bgColor: 'from-green-50 to-green-100',
+      image: 'https://images.pexels.com/photos/1591373/pexels-photo-1591373.jpeg?auto=compress&cs=tinysrgb&w=800'
     },
     {
       icon: <Building className="h-12 w-12" />,
       title: 'Umrah',
       description: 'Tailored Umrah packages with full service including hotels, flights, visas, and barcode.',
       color: 'from-purple-500 to-purple-600',
-      bgColor: 'from-purple-50 to-purple-100'
+      bgColor: 'from-purple-50 to-purple-100',
+      image: 'https://images.pexels.com/photos/8129903/pexels-photo-8129903.jpeg?auto=compress&cs=tinysrgb&w=800'
     }
   ];
 
@@ -359,7 +363,7 @@ const Home: React.FC = () => {
       </section>
 
       {/* Our Services Section */}
-      <section id="services" className="py-20 bg-gradient-to-br from-sky-50 to-blue-50">
+      <section id="services" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimationWrapper animationType="fade-in">
             <div className="text-center mb-16">
@@ -372,23 +376,38 @@ const Home: React.FC = () => {
             </div>
           </AnimationWrapper>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             {services.map((service, index) => (
               <AnimationWrapper 
                 key={index}
                 animationType="scale-in"
                 delay={index * 200}
               >
-                <div className={`bg-gradient-to-br ${service.bgColor} p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 border border-gray-100 group text-center`}>
-                  <div className={`bg-gradient-to-r ${service.color} text-white p-4 rounded-xl w-fit mx-auto mb-6 group-hover:scale-110 transition-transform duration-300`}>
-                    {service.icon}
+                <div className="bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105 border border-gray-100 group overflow-hidden">
+                  <div className="relative h-64 overflow-hidden">
+                    <img 
+                      src={service.image} 
+                      alt={service.title}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                    
+                    <div className={`absolute top-4 right-4 bg-gradient-to-r ${service.color} text-white p-3 rounded-xl shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                      {service.icon}
+                    </div>
+                    
+                    <div className="absolute bottom-4 left-4 right-4">
+                      <h3 className="text-2xl font-bold text-white mb-2">
+                        {service.title}
+                      </h3>
+                    </div>
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-4">
-                    {service.title}
-                  </h3>
-                  <p className="text-gray-700 leading-relaxed font-manrope">
-                    {service.description}
-                  </p>
+                  
+                  <div className="p-8">
+                    <p className="text-gray-700 text-lg leading-relaxed font-manrope">
+                      {service.description}
+                    </p>
+                  </div>
                 </div>
               </AnimationWrapper>
             ))}
@@ -524,87 +543,6 @@ const Home: React.FC = () => {
               </div>
             </AnimationWrapper>
           )}
-        </div>
-      </section>
-
-      {/* Destinations Section */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <AnimationWrapper animationType="fade-in">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-                Exclusive Travel Deals
-              </h2>
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto font-manrope">
-                Real savings at Egypt's most popular destinations. These aren't just discounts - they're your ticket to affordable luxury.
-              </p>
-            </div>
-          </AnimationWrapper>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {destinations.map((destination, index) => (
-              <AnimationWrapper 
-                key={index}
-                animationType="scale-in"
-                delay={index * 150}
-              >
-                <div className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 border border-gray-100">
-                  <div className="relative h-48 overflow-hidden">
-                    <img 
-                      src={destination.image} 
-                      alt={destination.name}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                    
-                    <div className="absolute top-4 right-4 bg-gradient-to-r from-orange-500 to-red-500 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg animate-pulse-slow">
-                      <Ticket className="h-3 w-3 inline mr-1" />
-                      {destination.discount} OFF
-                    </div>
-                    
-                    <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-sm px-3 py-1 rounded-lg flex items-center space-x-1 shadow-lg">
-                      <CreditCard className="w-3 h-3 text-sky-600" />
-                      <span className="text-xs font-bold text-gray-800">PAYLESS</span>
-                    </div>
-                    
-                    <div className="absolute bottom-4 left-4 right-4">
-                      <h3 className="text-2xl font-bold text-white mb-1">
-                        {destination.name}
-                      </h3>
-                      <p className="text-white/90 text-sm font-manrope">
-                        {destination.description}
-                      </p>
-                    </div>
-                  </div>
-                  
-                  <div className="p-6">
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="flex items-center space-x-2">
-                        <MapPin className="h-4 w-4 text-gray-400" />
-                        <span className="text-sm text-gray-600 font-manrope">Egypt</span>
-                      </div>
-                      <div className="flex items-center space-x-1">
-                        {[...Array(5)].map((_, i) => (
-                          <Star key={i} className="h-3 w-3 text-yellow-400 fill-current" />
-                        ))}
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-sm text-gray-500 line-through font-manrope">{destination.originalPrice} EGP</p>
-                        <p className="text-2xl font-bold text-green-600">{destination.discountedPrice} EGP</p>
-                      </div>
-                      <div className="text-right">
-                        <p className="text-sm text-sky-600 font-semibold">With Payless</p>
-                        <p className="text-xs text-gray-500 font-manrope">Per night average</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </AnimationWrapper>
-            ))}
-          </div>
         </div>
       </section>
 
