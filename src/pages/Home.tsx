@@ -363,28 +363,118 @@ const Home: React.FC = () => {
       </section>
 
       {/* Our Services Section */}
-      <section id="services" className="py-20 bg-white">
+      <section id="services" className="py-24 bg-gradient-to-br from-gray-50 to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimationWrapper animationType="fade-in">
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+              <div className="inline-flex items-center bg-sky-100 text-sky-700 px-4 py-2 rounded-full text-sm font-semibold mb-6">
+                <Sparkles className="h-4 w-4 mr-2" />
+                Premium Services
+              </div>
+              <h2 className="text-4xl md:text-6xl font-bold text-gray-900 mb-8 leading-tight">
                 Our Services
               </h2>
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto font-manrope">
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto font-manrope leading-relaxed">
                 Comprehensive travel solutions with exclusive discounts for Payless cardholders
               </p>
             </div>
           </AnimationWrapper>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
             {services.map((service, index) => (
               <AnimationWrapper 
                 key={index}
                 animationType="scale-in"
                 delay={index * 200}
               >
-                <div className="bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105 border border-gray-100 group overflow-hidden">
-                  <div className="relative h-64 overflow-hidden">
+                <div className="group relative">
+                  {/* Main Card */}
+                  <div className="bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-[1.02] border border-gray-100 overflow-hidden relative z-10">
+                    {/* Image Section */}
+                    <div className="relative h-72 overflow-hidden">
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent z-10"></div>
+                      <img 
+                        src={service.image} 
+                        alt={service.title}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                      />
+                      
+                      {/* Floating Icon */}
+                      <div className={`absolute top-6 right-6 bg-gradient-to-r ${service.color} text-white p-4 rounded-2xl shadow-2xl group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 z-20`}>
+                        {service.icon}
+                      </div>
+                      
+                      {/* Service Badge */}
+                      <div className="absolute top-6 left-6 bg-white/95 backdrop-blur-sm px-4 py-2 rounded-full flex items-center space-x-2 shadow-lg z-20">
+                        <div className={`w-2 h-2 rounded-full bg-gradient-to-r ${service.color}`}></div>
+                        <span className="text-sm font-bold text-gray-800">PAYLESS</span>
+                      </div>
+                      
+                      {/* Title Overlay */}
+                      <div className="absolute bottom-6 left-6 right-6 z-20">
+                        <h3 className="text-3xl font-bold text-white mb-2 drop-shadow-lg">
+                          {service.title}
+                        </h3>
+                        <div className="w-16 h-1 bg-white/80 rounded-full"></div>
+                      </div>
+                    </div>
+                    
+                    {/* Content Section */}
+                    <div className="p-8">
+                      <p className="text-gray-700 text-lg leading-relaxed font-manrope mb-6">
+                        {service.description}
+                      </p>
+                      
+                      {/* Features List */}
+                      <div className="space-y-3">
+                        <div className="flex items-center space-x-3">
+                          <div className={`w-2 h-2 rounded-full bg-gradient-to-r ${service.color}`}></div>
+                          <span className="text-sm text-gray-600 font-manrope">Exclusive member discounts</span>
+                        </div>
+                        <div className="flex items-center space-x-3">
+                          <div className={`w-2 h-2 rounded-full bg-gradient-to-r ${service.color}`}></div>
+                          <span className="text-sm text-gray-600 font-manrope">24/7 customer support</span>
+                        </div>
+                        <div className="flex items-center space-x-3">
+                          <div className={`w-2 h-2 rounded-full bg-gradient-to-r ${service.color}`}></div>
+                          <span className="text-sm text-gray-600 font-manrope">Instant booking confirmation</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Decorative Background Element */}
+                  <div className={`absolute inset-0 bg-gradient-to-r ${service.bgColor} rounded-3xl transform rotate-1 scale-95 opacity-30 group-hover:rotate-2 group-hover:scale-98 transition-all duration-500`}></div>
+                </div>
+              </AnimationWrapper>
+            ))}
+          </div>
+          
+          {/* Call to Action */}
+          <AnimationWrapper animationType="fade-in" delay={800}>
+            <div className="text-center mt-16">
+              <div className="bg-gradient-to-r from-sky-500 to-blue-600 rounded-3xl p-8 text-white relative overflow-hidden">
+                <div className="absolute inset-0 bg-black/10"></div>
+                <div className="relative z-10">
+                  <h3 className="text-2xl md:text-3xl font-bold mb-4">
+                    Ready to Experience Premium Travel Services?
+                  </h3>
+                  <p className="text-sky-100 text-lg mb-6 font-manrope leading-relaxed">
+                    Get your Payless card today and unlock exclusive access to all our premium services
+                  </p>
+                  <Link
+                    to="/get-your-card"
+                    className="inline-flex items-center bg-white text-sky-600 px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl space-x-2"
+                  >
+                    <CreditCard className="h-5 w-5" />
+                    <span>Get Your Card Now</span>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </AnimationWrapper>
+        </div>
+      </section>
                     <img 
                       src={service.image} 
                       alt={service.title}

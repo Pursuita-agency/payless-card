@@ -66,6 +66,8 @@ const Reservation: React.FC = () => {
 
     if (!formData.phone.trim()) {
       newErrors.phone = 'Phone number is required';
+    } else if (formData.phone.length < 11) {
+      newErrors.phone = 'Phone number must be at least 11 digits';
     }
 
     if (!formData.email.trim()) {
@@ -76,12 +78,8 @@ const Reservation: React.FC = () => {
 
     if (!formData.idSerial.trim()) {
       newErrors.idSerial = 'Payless Card Number is required';
-    } else if (formData.idSerial.length !== 16) {
-      newErrors.idSerial = 'Payless Card Number must be exactly 16 digits';
-    } else if (!/^\d{16}$/.test(formData.idSerial)) {
-      newErrors.idSerial = 'Payless Card Number must contain only digits';
-    } else if (!formData.idSerial.startsWith('40235050')) {
-      newErrors.idSerial = 'Invalid Payless Card Number. Must start with 40235050';
+    } else if (formData.idSerial.length !== 16 || !formData.idSerial.startsWith('40235050')) {
+      newErrors.idSerial = 'Make sure you enter your Payless card number correctly.';
     }
 
     if (!formData.reservationType) {
@@ -106,6 +104,23 @@ const Reservation: React.FC = () => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
+    
+    // Restrict to English characters only for text inputs
+    if (e.target.type === 'text' || e.target.type === 'email') {
+      const englishOnlyRegex = /^[a-zA-Z0-9\s@._-]*$/;
+      if (!englishOnlyRegex.test(value)) {
+        return;
+      }
+    }
+    
+    // Restrict to numbers only for phone and ID serial
+    if (name === 'phone' || name === 'idSerial') {
+      const numbersOnlyRegex = /^[0-9]*$/;
+      if (!numbersOnlyRegex.test(value)) {
+        return;
+      }
+    }
+    
     setFormData(prev => ({
       ...prev,
       [name]: value
@@ -382,11 +397,11 @@ const Reservation: React.FC = () => {
                         value={formData.idSerial}
                         onChange={handleInputChange}
                         maxLength={16}
-                        pattern="[0-9]*"
+                        inputMode="numeric"
                         className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-colors duration-200 ${
                           errors.idSerial ? 'border-red-300' : 'border-gray-300'
                         }`}
-                        placeholder="40235050xxxxxxxx"
+                        placeholder="xxxxxxxxxxxxxxxx"
                       />
                       {errors.idSerial && (
                         <p className="mt-1 text-sm text-red-600">{errors.idSerial}</p>

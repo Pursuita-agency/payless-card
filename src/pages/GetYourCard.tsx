@@ -75,6 +75,8 @@ const GetYourCard: React.FC = () => {
 
     if (!formData.phone.trim()) {
       newErrors.phone = 'Phone number is required';
+    } else if (formData.phone.length < 11) {
+      newErrors.phone = 'Phone number must be at least 11 digits';
     }
 
     if (!formData.governorate) {
@@ -87,6 +89,23 @@ const GetYourCard: React.FC = () => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
+    
+    // Restrict to English characters only for text inputs
+    if (e.target.type === 'text') {
+      const englishOnlyRegex = /^[a-zA-Z\s]*$/;
+      if (!englishOnlyRegex.test(value)) {
+        return;
+      }
+    }
+    
+    // Restrict to numbers only for phone
+    if (name === 'phone') {
+      const numbersOnlyRegex = /^[0-9]*$/;
+      if (!numbersOnlyRegex.test(value)) {
+        return;
+      }
+    }
+    
     setFormData(prev => ({
       ...prev,
       [name]: value
