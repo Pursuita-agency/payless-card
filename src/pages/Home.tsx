@@ -152,7 +152,7 @@ const Home: React.FC = () => {
       description: 'Tailored Umrah packages with full service including hotels, flights, visas, and barcode.',
       color: 'from-purple-500 to-purple-600',
       bgColor: 'from-purple-50 to-purple-100',
-      image: 'https://images.pexels.com/photos/8129903/pexels-photo-8129903.jpeg?auto=compress&cs=tinysrgb&w=800'
+      image: '/public/umrah.webp'
     }
   ];
 
