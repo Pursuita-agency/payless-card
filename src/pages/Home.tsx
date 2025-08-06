@@ -346,7 +346,7 @@ const Home: React.FC = () => {
                   Discover the World with Payless...
                 </h3>
                 <p className="text-lg text-gray-600 leading-relaxed font-manrope">
-                  Payless card is your ultimate pass to incredible discounts of up to 50% on all your travel adventures! 
+                  Payless card is your ultimate pass to incredible discounts of up to 20% on all your travel adventures! 
                   Whether you're envisioning luxurious hotels, thrilling cruises, or serene yacht retreats, 
                   Payless is your reliable companion for maximizing savings on every aspect of your journey!
                 </p>
