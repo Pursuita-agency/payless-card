@@ -475,35 +475,6 @@ const Home: React.FC = () => {
           </AnimationWrapper>
         </div>
       </section>
-                    <img 
-                      src={service.image} 
-                      alt={service.title}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                    
-                    <div className={`absolute top-4 right-4 bg-gradient-to-r ${service.color} text-white p-3 rounded-xl shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-                      {service.icon}
-                    </div>
-                    
-                    <div className="absolute bottom-4 left-4 right-4">
-                      <h3 className="text-2xl font-bold text-white mb-2">
-                        {service.title}
-                      </h3>
-                    </div>
-                  </div>
-                  
-                  <div className="p-8">
-                    <p className="text-gray-700 text-lg leading-relaxed font-manrope">
-                      {service.description}
-                    </p>
-                  </div>
-                </div>
-              </AnimationWrapper>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Why Choose Payless Section */}
       <section className="py-20 bg-white">
