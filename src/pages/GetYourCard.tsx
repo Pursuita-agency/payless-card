@@ -385,6 +385,7 @@ const GetYourCard: React.FC = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

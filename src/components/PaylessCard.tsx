@@ -22,7 +22,7 @@ const PaylessCard: React.FC<PaylessCardProps> = ({
     <div className={`${sizeClasses[size]} ${className} ${showAnimation ? 'animate-float' : ''}`}>
       <img 
         src="/website-card.png" 
-        alt="Payless Travel Card"
+        alt="Payless Travel Discount Card - Save up to 20% on hotels and travel across Egypt"
         className="w-full h-full object-cover rounded-3xl shadow-2xl hover:shadow-glow transition-shadow duration-300"
         onError={(e) => {
           e.currentTarget.style.display = 'flex';

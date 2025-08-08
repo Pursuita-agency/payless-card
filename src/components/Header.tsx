@@ -33,7 +33,7 @@ const Header: React.FC = () => {
             <div className="p-2">
               <img 
                 src="/website-logo.jpeg"
-                alt="Payless"
+                alt="Payless Travel - Egypt's #1 Discount Card"
                 className="h-8 w-auto object-contain group-hover:scale-105 transition-transform duration-200"
                 style={{ height: '2.8rem', borderRadius: '4px' }}
               />

@@ -691,7 +691,7 @@ const Home: React.FC = () => {
                       <div className="bg-sky-100 p-2 rounded-lg">
                         <HelpCircle className="h-5 w-5 text-sky-600" />
                       </div>
-                      <h3 className="text-lg font-semibold text-gray-900" role="heading" aria-level="3">
+                      <h3 className="text-lg font-semibold text-gray-900">
                         {faq.question}
                       </h3>
                     </div>
@@ -788,6 +788,7 @@ const Home: React.FC = () => {
         </div>
       </section>
     </div>
+    </>
   );
 };
 
