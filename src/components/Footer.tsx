@@ -9,11 +9,11 @@ const Footer: React.FC = () => {
           {/* Logo and Description */}
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center mb-4">
-              <div className="bg-white/10 p-2 rounded-lg">
+              <div className="p-2">
                 <img 
-                  src="https://paylesseg.com/wp-content/uploads/2024/10/362x200-pix-1.png"
+                  src="website-logo.jpeg"
                   alt="Payless"
-                  className="h-8 w-auto object-contain brightness-0 invert"
+                  className="h-8 w-auto object-contain"
                 />
               </div>
             </div>
