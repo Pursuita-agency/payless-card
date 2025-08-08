@@ -23,7 +23,7 @@ const PaylessCard: React.FC<PaylessCardProps> = ({
       <img 
         src="/website-card.png" 
         alt="Payless Travel Card"
-        className="w-full h-full object-cover rounded-xl shadow-2xl hover:shadow-glow transition-shadow duration-300"
+        className="w-full h-full object-cover rounded-xl hover:shadow-glow transition-shadow duration-300"
         onError={(e) => {
           e.currentTarget.style.display = 'flex';
           e.currentTarget.nextElementSibling!.style.display = 'none';
