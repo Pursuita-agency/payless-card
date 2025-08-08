@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { 
   MapPin, 
@@ -278,7 +279,7 @@ const Home: React.FC = () => {
                 <span className="block bg-gradient-to-r from-orange-300 to-orange-500 bg-clip-text text-transparent">
                   Travel in Egypt...
                 </span>
-                <span className="block text-3xl md:text-4xl mt-2 font-manrope">
+                <span className="block text-3xl md:text-4xl mt-2 font-manrope" role="heading" aria-level="2">
                   Our Card Gives You an 
                   <span className="text-orange-300"> Unbeatable Discount</span>
                 </span>
@@ -318,10 +319,10 @@ const Home: React.FC = () => {
           <AnimationWrapper animationType="scale-in">
             <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl">
               <Target className="h-12 w-12 mx-auto mb-4 text-orange-200" />
-              <h2 className="text-3xl md:text-4xl font-bold mb-4 font-manrope">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 font-manrope" id="payless-promise">
                 "Wherever you want to travel in Egypt...
               </h2>
-              <h3 className="text-2xl md:text-3xl font-bold text-orange-200 mb-6">
+              <h3 className="text-2xl md:text-3xl font-bold text-orange-200 mb-6" aria-describedby="payless-promise">
                 our card gives you an unbeatable discount."
               </h3>
               <p className="text-xl text-orange-100 max-w-2xl mx-auto font-manrope">
