@@ -30,7 +30,7 @@ const Header: React.FC = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo with enhanced visibility */}
           <Link to="/" className="flex items-center group">
-            <div className="bg-gradient-to-r from-sky-50 to-blue-50 p-2 rounded-lg shadow-logo border border-sky-100">
+            <div className="p-2">
               <img 
                 src="/website-logo.jpeg"
                 alt="Payless"
