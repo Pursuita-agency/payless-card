@@ -21,12 +21,12 @@ const PaylessCard: React.FC<PaylessCardProps> = ({
   return (
     <div className={`${sizeClasses[size]} ${className} ${showAnimation ? 'animate-float' : ''}`}>
       <img 
-        src="PLACEHOLDER_FOR_CARD_IMAGE" 
+        src="/website-card.png" 
         alt="Payless Travel Card"
         className="w-full h-full object-cover rounded-xl shadow-2xl hover:shadow-glow transition-shadow duration-300"
         onError={(e) => {
-          e.currentTarget.style.display = 'none';
-          e.currentTarget.nextElementSibling!.style.display = 'flex';
+          e.currentTarget.style.display = 'flex';
+          e.currentTarget.nextElementSibling!.style.display = 'none';
         }}
       />
       {/* Enhanced Fallback Card Design */}
