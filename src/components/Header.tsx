@@ -35,6 +35,7 @@ const Header: React.FC = () => {
                 src="/website-logo.jpeg"
                 alt="Payless"
                 className="h-8 w-auto object-contain group-hover:scale-105 transition-transform duration-200"
+                style="height:2.8rem;border-radius:4px;"
               />
             </div>
           </Link>
