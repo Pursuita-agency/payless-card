@@ -32,7 +32,7 @@ const Header: React.FC = () => {
           <Link to="/" className="flex items-center group">
             <div className="bg-gradient-to-r from-sky-50 to-blue-50 p-2 rounded-lg shadow-logo border border-sky-100">
               <img 
-                src="https://paylesseg.com/wp-content/uploads/2024/10/362x200-pix-1.png"
+                src="/website-logo.jpeg"
                 alt="Payless"
                 className="h-8 w-auto object-contain group-hover:scale-105 transition-transform duration-200"
               />
