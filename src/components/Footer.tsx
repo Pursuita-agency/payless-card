@@ -11,7 +11,7 @@ const Footer: React.FC = () => {
             <div className="flex items-center mb-4">
               <div className="p-2">
                 <img 
-                  src="website-logo.jpeg"
+                  src="/website-logo.jpeg"
                   alt="Payless"
                   className="h-8 w-auto object-contain"
                 />
